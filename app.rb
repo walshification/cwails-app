@@ -14,6 +14,10 @@ class App
     @router = Router.new(ROUTES)
   end
 
+  def self.root
+    File.dirname(__FILE__)
+  end
+
   def call(env)
     result = router.resolve(env)
     [result.status, result.headers, result.content]

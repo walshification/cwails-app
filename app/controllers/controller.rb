@@ -11,7 +11,7 @@ class Controller
     send(action)
     self.status = 200
     self.headers = { "Content-Type" => "text/html" }
-    self.content = ["Hello, world"]
+    self.content = [template.render(self)]
     self
   end
 
@@ -27,5 +27,13 @@ class Controller
     self.headers = {}
     self.content = ["Internal error"]
     self
+  end
+
+  private
+
+  def template
+    Slim::Template.new(
+      File.join(App.root, 'app', 'views', "#{self.name}", "#{self.action}.slim")
+    )
   end
 end
